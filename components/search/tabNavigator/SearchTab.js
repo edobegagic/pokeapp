@@ -12,8 +12,6 @@ import axios from "axios";
 import SearchHeader from "../SearchHeader";
 import SearchBody from "../SearchBody";
 
-var backgroundimg = require("../../../img/poke2.png");
-
 class SearchTab extends Component {
   static navigationOptions = {
     header: null

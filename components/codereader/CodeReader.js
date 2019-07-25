@@ -5,6 +5,7 @@ import * as Permissions from "expo-permissions";
 
 import { BarCodeScanner } from "expo-barcode-scanner";
 import HomeScreen from "../home/HomeScreen";
+var pikatv = require("../../img/pikatv.png");
 
 export default class CodeReader extends React.Component {
   state = {
@@ -35,7 +36,10 @@ export default class CodeReader extends React.Component {
         style={{
           flex: 1,
           flexDirection: "column",
-          justifyContent: "flex-end"
+          justifyContent: "flex-end",
+          marginLeft: "5%",
+          marginRight: "5%",
+          marginTop: "5%"
         }}
       >
         <View
@@ -43,24 +47,28 @@ export default class CodeReader extends React.Component {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            paddingTop: 7
+            paddingTop: 7,
+            backgroundColor: "white",
+            flexDirection: "row",
+            borderWidth: 1,
+            borderRadius: 10,
+            borderColor: "#73E155",
+            paddingBottom: 5,
+            borderStyle: "dashed"
           }}
         >
-          <Text
-            style={{
-              fontSize: 15,
-              color: "#171717",
-              fontWeight: "bold"
-            }}
-          >
-            to catch a POKéMON scan POKéQR code
-          </Text>
+          <Text style={styles.tanka}>to catch a</Text>
+          <Text style={styles.debela}> POKéMON</Text>
+          <Text style={styles.tanka}> scan</Text>
+          <Text style={styles.debela}> POKéQR</Text>
+          <Text style={styles.tanka}> code</Text>
         </View>
+        <View style={{ borderWidth: 10, borderColor: "white" }} />
         <View
           style={{
             flex: 5,
-            borderRadius: 20,
-            backgroundColor: "#171717"
+            backgroundColor: "#171717",
+            borderRadius: 10
           }}
         >
           <BarCodeScanner
@@ -74,12 +82,7 @@ export default class CodeReader extends React.Component {
             />
           )}
         </View>
-        <View style={{ flex: 1 }}>
-          <Image
-            style={{ height: "100%", width: "100%" }}
-            source={require("../../img/footer.png")}
-          />
-        </View>
+        <View style={{ borderWidth: 7, borderColor: "white" }} />
       </View>
     );
   }
@@ -91,3 +94,16 @@ export default class CodeReader extends React.Component {
     this.props.navigation.navigate("CodeResult", { qr: data });
   };
 }
+
+const styles = StyleSheet.create({
+  tanka: {
+    fontSize: 16,
+    color: "#2e2e2e"
+  },
+  debela: {
+    fontSize: 16,
+    //   color: "#42B6DC",
+    color: "#F38785",
+    fontWeight: "bold"
+  }
+});

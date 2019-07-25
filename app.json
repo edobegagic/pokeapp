@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pokeapp",
-    "slug": "pokeapp",
+    "name": "pokeapp02",
+    "slug": "pokeapp02",
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": [
@@ -26,6 +26,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "need pokeQR codes.\n"
+    "description": "need pokeQR codes.\nv02\n(dizajn poboljsan,\nfavorite treba bolje implementirati)\n"
   }
 }
