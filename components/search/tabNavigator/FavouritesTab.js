@@ -6,73 +6,155 @@ import {
   AsyncStorage,
   Button,
   FlatList,
+  ScrollView,
   Image
 } from "react-native";
 
-import SearchBody from "../../search/SearchBody";
-class FavouritesTab extends Component {
+export default class FavouritesTab extends Component {
   constructor(props) {
     super(props);
-  }
-  render() {
-    displayData = async () => {
-      value = JSON.parse(await AsyncStorage.getItem("myList"));
+    this.state = {
+      array: []
     };
+  }
 
-    /*
-    ukBrObj = value.length - 1;
-    function imena(ukBrObj) {
-      var i;
-      for (i = 0; i <= ukBrObj; i++) {
-        value[i].ime;
-    }*/
+  displayData = async () => {
+    value = JSON.parse(await AsyncStorage.getItem("myList"));
+    console.log("test1");
+    console.log(value);
+    console.log(this.state.array.length);
+    console.log("test1");
+    var joined = this.state.array.concat(value);
+    this.setState({ array: joined });
+    console.log(this.state.array.length);
+  };
 
-    const nekiUri = value[0].slikaUri;
+  async componentDidMount() {
+    await this.displayData();
+  }
+
+  list = async () => {
+    try {
+      if (this.state.array.length > 0) {
+        changerList = [
+          ...new Map(this.state.array.map(o => [o.broj, o])).values() //spriječava da se prikazuju duplikati
+        ];
+
+        renderList = changerList.map(element => {
+          return (
+            <View
+              key={element.broj}
+              style={{
+                flex: 1,
+                justifyContent: "space-around",
+                alignItems: "center",
+                flexDirection: "row",
+                paddingBottom: 10
+              }}
+            >
+              <Image
+                style={{
+                  height: 100,
+                  width: 100
+                }}
+                source={{ uri: element.slikaUri }}
+              />
+
+              <Text>{element.ime.toUpperCase()}</Text>
+              <Text>{element.broj}</Text>
+              <Button title="X" />
+            </View>
+          );
+        });
+      } else {
+        var pokecekanje = require("../../../img/nopokemon.png");
+        renderList = (
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 70
+            }}
+          >
+            <View
+              style={{
+                paddingTop: 25,
+                justifyContent: "center",
+                alignItems: "center",
+                borderColor: "grey",
+                borderWidth: 1,
+                borderStyle: "dashed",
+                borderRadius: 15,
+                width: 200,
+                height: 200
+              }}
+            >
+              <Image style={{ height: 90, width: 110 }} source={pokecekanje} />
+              <View style={{ height: 30 }} />
+              <Text>You didn't add any POKéMON.</Text>
+            </View>
+          </View>
+        );
+      }
+    } catch (err) {
+      var pokecekanje = require("../../../img/nopokemon.png");
+      renderList = (
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 70
+          }}
+        >
+          <View
+            style={{
+              paddingTop: 25,
+              justifyContent: "center",
+              alignItems: "center",
+              borderColor: "grey",
+              borderWidth: 1,
+              borderStyle: "dashed",
+              borderRadius: 15,
+              width: 200,
+              height: 200
+            }}
+          >
+            <Image style={{ height: 90, width: 110 }} source={pokecekanje} />
+            <View style={{ height: 30 }} />
+            <Text>You didn't add any POKéMON.</Text>
+          </View>
+        </View>
+      );
+    }
+  };
+
+  clearAsyncStorage = async () => {
+    await AsyncStorage.clear();
+  };
+
+  render() {
+    this.list();
+
     return (
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <Text style={styles.naslov}>FAVOURITES</Text>
-
-        <View style={styles.container}>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "grey",
-              borderBottomWidth: 2,
-              borderTopColor: "grey",
-              borderTopWidth: 2
-            }}
-          >
-            <View>
-              <Image
-                style={{
-                  width: 80,
-                  height: 80
-                  /* borderWidth: 2,
-                  borderColor: "lightcoral",
-                  borderRadius: 20 */
-                }}
-                source={{
-                  uri: nekiUri
-                }}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-            >
-              <Text style={styles.podaci}>{value[0].ime}</Text>
-              <Text style={styles.podaci}>nr. {value[0].broj}</Text>
-            </View>
-          </View>
-        </View>
+        <View
+          style={{
+            borderColor: "lightcoral",
+            borderBottomWidth: 2,
+            width: "100%"
+          }}
+        />
+        <Button title="clear asyncstorage" onPress={this.clearAsyncStorage} />
+        <ScrollView
+          style={{ height: "90%", width: "100%", marginBottom: "10%" }}
+        >
+          <View style={{ paddingTop: 20 }}>{renderList}</View>
+        </ScrollView>
       </View>
     );
   }
 }
-export default FavouritesTab;
 
 const styles = StyleSheet.create({
   container: {
@@ -84,12 +166,9 @@ const styles = StyleSheet.create({
   naslov: {
     padding: 5,
     paddingTop: 25,
-    paddingBottom: 5,
+    paddingBottom: 20,
     fontSize: 25,
-    fontWeight: "bold"
-  },
-  podaci: {
-    fontSize: 20,
-    paddingLeft: "5%"
+    fontWeight: "bold",
+    color: "coral"
   }
 });

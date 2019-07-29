@@ -1,11 +1,8 @@
 import * as React from "react";
-import { Text, View, StyleSheet, Button, Vibration, Image } from "react-native";
-import Constants from "expo-constants";
+import { Text, View, StyleSheet, Button, Vibration } from "react-native";
 import * as Permissions from "expo-permissions";
 
 import { BarCodeScanner } from "expo-barcode-scanner";
-import HomeScreen from "../home/HomeScreen";
-var pikatv = require("../../img/pikatv.png");
 
 export default class CodeReader extends React.Component {
   state = {
@@ -14,7 +11,7 @@ export default class CodeReader extends React.Component {
   };
 
   async componentDidMount() {
-    this.getPermissionsAsync();
+    await this.getPermissionsAsync();
   }
 
   getPermissionsAsync = async () => {

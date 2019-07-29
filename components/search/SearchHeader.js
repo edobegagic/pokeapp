@@ -1,16 +1,7 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { AppRegistry, TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 
 class SearchHeader extends Component {
-  static navigationOptions = {
-    header: null
-  };
-  constructor(props) {
-    super(props);
-    this.state = { text: "" };
-  }
-
   render() {
     return (
       <View>
@@ -21,6 +12,7 @@ class SearchHeader extends Component {
             borderWidth: 1,
             paddingLeft: 15
           }}
+          value={this.props.value}
           placeholder="enter pokemon name"
           onChangeText={this.props.onChangeText}
           returnKeyType="search"

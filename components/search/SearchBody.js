@@ -11,34 +11,29 @@ import {
 
 class SearchBody extends Component {
   favoriti = [];
- /* state = {
-    text: "",
-    item: [{ id: 1, data: "loading" }] */
-  };
 
   render() {
+    const storeData = async () => {
+      this.favoriti.push({ slikaUri, ime, broj });
+      console.log("test1");
+      console.log(this.favoriti);
+      await AsyncStorage.setItem("myList", JSON.stringify(this.favoriti));
+      console.log(this.favoriti);
+      // console.log(value);
+      alert(`You added ${ime.toUpperCase()} to FAVOURITES`);
+    };
+
     const pokemonData = this.props.pokemonData;
     const ime = pokemonData.forms[0].name;
     const slikaUri = pokemonData.sprites.front_default;
-    //const type = pokemonData.types[0].type.name; za type ubacit array this.favoriti.push([ime,type])
     const broj = pokemonData.base_experience;
-
-    storeData = async () => {
-      this.favoriti.push({ slikaUri, ime, broj }); //ime mijenjat this.state.text??
-
-      await AsyncStorage.setItem("myList", JSON.stringify(this.favoriti));
-      value = JSON.parse(await AsyncStorage.getItem("myList"));
-
-      console.log(value);
-      console.log(typeof value);
-    };
 
     return (
       <View style={styles.container}>
         <View style={styles.naslov}>
           <Text style={styles.ime}>{ime.toUpperCase()}</Text>
           <Text style={{ paddingLeft: 10, paddingTop: 3 }}>NR.</Text>
-          <Text style={{ paddingTop: 3 }}>{pokemonData.base_experience}</Text>
+          <Text style={{ paddingTop: 3 }}>{broj}</Text>
         </View>
         <View>
           <Image
@@ -50,7 +45,7 @@ class SearchBody extends Component {
               borderRadius: 20
             }}
             source={{
-              uri: pokemonData.sprites.front_default
+              uri: slikaUri
             }}
           />
           <View
@@ -77,31 +72,11 @@ class SearchBody extends Component {
         </View>
         <View>
           <Text />
-
           <Button title="ADD TO FAVOURITES" onPress={storeData} />
         </View>
       </View>
     );
   }
-
-  /*addToFavourites(ime) {
-    favoriti.push(ime);
-    var myJSON = JSON.stringify(favoriti);
-    AsyncStorage.setItem("user", myJSON);
-  }
-*/
-  /*addToFavourites(ime){
-    try{
-      await AsyncStorage.setItem('mykey', ime);
-    } catch (error) {
-      //error
-    }
-  }
-
-  addToFavourites(ime) {
-    let user = ime;
-    AsyncStorage.setItem("user", user);
-  }*/
 }
 
 export default SearchBody;
