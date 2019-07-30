@@ -1,55 +1,38 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  AsyncStorage,
-  Button,
-  FlatList,
-  Image
-} from "react-native";
+import { View, Text, StyleSheet, Button, Image } from "react-native";
 
-class FavouriteLine extends Component {
+export default class FavouriteLine extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <View
+        key={this.props.broj} //props
         style={{
+          flex: 1,
+          justifyContent: "space-around",
+          alignItems: "center",
           flexDirection: "row",
-          borderBottomColor: "grey",
-          borderBottomWidth: 2,
-          borderTopColor: "grey",
-          borderTopWidth: 2
+          paddingBottom: 10
         }}
       >
-        <View>
-          <Image
-            style={{
-              width: 80,
-              height: 80
-              /* borderWidth: 2,
-                  borderColor: "lightcoral",
-                  borderRadius: 20 */
-            }}
-            source={{
-              uri: value[0].slikaUri
-            }}
-          />
-        </View>
-        <View
+        <Image
           style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center"
+            height: 100,
+            width: 100
           }}
-        >
-          <Text style={styles.podaci}>{value[0].ime}</Text>
-          <Text style={styles.podaci}>nr. {value[0].broj}</Text>
-        </View>
+          source={{ uri: this.props.slikaUri }} //props
+        />
+
+        <Text>{this.props.ime.toUpperCase()}</Text>
+        <Text>{this.props.broj}</Text>
+        <Button title="X" onPress={() => this.props.removePokemon()} />
       </View>
     );
   }
 }
-export default FavouriteLine;
 
 const styles = StyleSheet.create({
   container: {

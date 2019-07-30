@@ -10,6 +10,8 @@ import {
   Image
 } from "react-native";
 
+import FavouriteLine from "./FavouriteLine";
+
 export default class FavouritesTab extends Component {
   constructor(props) {
     super(props);
@@ -18,20 +20,17 @@ export default class FavouritesTab extends Component {
     };
   }
 
+  removePokemon(element) {
+    let array = this.state.array;
+    array = array.filter(poke => poke.broj !== element.broj);
+    this.setState({ array });
+  }
+
   displayData = async () => {
     value = JSON.parse(await AsyncStorage.getItem("myList"));
-    console.log("test1");
-    console.log(value);
-    console.log(this.state.array.length);
-    console.log("test1");
     var joined = this.state.array.concat(value);
     this.setState({ array: joined });
-    console.log(this.state.array.length);
   };
-
-  async componentDidMount() {
-    await this.displayData();
-  }
 
   list = async () => {
     try {
@@ -42,28 +41,13 @@ export default class FavouritesTab extends Component {
 
         renderList = changerList.map(element => {
           return (
-            <View
+            <FavouriteLine
+              broj={element.broj}
+              slikaUri={element.slikaUri}
+              ime={element.ime}
               key={element.broj}
-              style={{
-                flex: 1,
-                justifyContent: "space-around",
-                alignItems: "center",
-                flexDirection: "row",
-                paddingBottom: 10
-              }}
-            >
-              <Image
-                style={{
-                  height: 100,
-                  width: 100
-                }}
-                source={{ uri: element.slikaUri }}
-              />
-
-              <Text>{element.ime.toUpperCase()}</Text>
-              <Text>{element.broj}</Text>
-              <Button title="X" />
-            </View>
+              removePokemon={() => this.removePokemon(element)}
+            />
           );
         });
       } else {
@@ -128,9 +112,11 @@ export default class FavouritesTab extends Component {
     }
   };
 
+  /*
   clearAsyncStorage = async () => {
     await AsyncStorage.clear();
   };
+*/
 
   render() {
     this.list();
@@ -145,7 +131,7 @@ export default class FavouritesTab extends Component {
             width: "100%"
           }}
         />
-        <Button title="clear asyncstorage" onPress={this.clearAsyncStorage} />
+        {/* <Button title="clear asyncstorage" onPress={this.clearAsyncStorage} /> */}
         <ScrollView
           style={{ height: "90%", width: "100%", marginBottom: "10%" }}
         >
@@ -153,6 +139,10 @@ export default class FavouritesTab extends Component {
         </ScrollView>
       </View>
     );
+  }
+
+  async componentDidMount() {
+    await this.displayData();
   }
 }
 

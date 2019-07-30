@@ -5,8 +5,7 @@ import {
   StyleSheet,
   Image,
   Button,
-  AsyncStorage,
-  TouchableOpacity
+  AsyncStorage
 } from "react-native";
 
 class SearchBody extends Component {
@@ -15,11 +14,9 @@ class SearchBody extends Component {
   render() {
     const storeData = async () => {
       this.favoriti.push({ slikaUri, ime, broj });
-      console.log("test1");
-      console.log(this.favoriti);
+      // console.log("test1");
+      // console.log(this.favoriti);
       await AsyncStorage.setItem("myList", JSON.stringify(this.favoriti));
-      console.log(this.favoriti);
-      // console.log(value);
       alert(`You added ${ime.toUpperCase()} to FAVOURITES`);
     };
 

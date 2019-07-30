@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Keyboard,
-  Image,
-  ImageBackground
-} from "react-native";
+import { View, Keyboard } from "react-native";
 import axios from "axios";
 
 import SearchHeader from "../SearchHeader";
