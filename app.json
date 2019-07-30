@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pokeapp02",
-    "slug": "pokeapp02",
+    "name": "pokeapp-final",
+    "slug": "pokeapp-final",
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": [
@@ -26,6 +26,7 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "need pokeQR codes.\nv02\n(dizajn poboljsan,\nfavorite treba bolje implementirati)\n"
+    "description": "pokeQR codes for testing in github code",
+    "githubUrl": "https://github.com/edobegagic/pokeapp"
   }
 }

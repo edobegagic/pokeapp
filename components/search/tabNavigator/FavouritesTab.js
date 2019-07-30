@@ -24,7 +24,16 @@ export default class FavouritesTab extends Component {
     let array = this.state.array;
     array = array.filter(poke => poke.broj !== element.broj);
     this.setState({ array });
+    this.removefromasync();
   }
+
+  removefromasync = async () => {
+    try {
+      await AsyncStorage.removeItem("myList");
+    } catch (err) {
+      console.log(`The error is: ${err}`);
+    }
+  };
 
   displayData = async () => {
     value = JSON.parse(await AsyncStorage.getItem("myList"));
